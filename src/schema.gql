@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Institucion"""
+type Institution {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  image: String
+  province: String!
+  canton: String!
+  parish: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""Proceso electoral"""
+type ElectoralProcess {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  processDate: DateTime!
+  initialHour: DateTime!
+  finalHour: DateTime!
+  name: String!
+  period: String!
+  isActive: Boolean!
+  institution: Institution!
+}
+
+"""Junta"""
+type Board {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: Float!
+  place: String!
+  electoralProcess: ElectoralProcess!
+}
+
+type Query {
+  getAllBoards: [Board!]!
+  getAllElectoralProcess: [ElectoralProcess!]!
+  getAllInstitutions: [Institution!]!
+}
+
+type Mutation {
+  createElectoralProcess(eproccess: CreateEProcessInput!): ElectoralProcess!
+  deleteElectoralProcess(id: Float!): String!
+  createInstitution(institution: CreateInstitutionInput!): Institution!
+  deleteInstitution(id: Float!): Institution!
+}
+
+"""Input Proceso Electoral"""
+input CreateEProcessInput {
+  processDate: DateTime!
+  initialHour: DateTime!
+  finalHour: DateTime!
+  name: String!
+  period: String!
+  isActive: Boolean
+  institution: Float!
+}
+
+"""Input Institucion"""
+input CreateInstitutionInput {
+  name: String!
+  image: String
+  province: String!
+  canton: String!
+  parish: String!
+}
