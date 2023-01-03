@@ -1,5 +1,5 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateEProcessInput } from './dto/create-eprocess.input';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateEProcessInput, UpdateEProcessInput } from './dto';
 import { ElectoralProcessService } from './electoral-process.service';
 import { ElectoralProcess } from './entities';
 
@@ -14,20 +14,38 @@ export class ElectoralProcessResolver {
         return await this.eprocessService.getAll()
     }
 
+    @Query(() => ElectoralProcess)
+    async getElectoralProcess(
+        @Args("id", { type: () => Int }) id: number
+    ){
+        return await this.eprocessService.findOne(id)
+    }
+
     @Mutation(() => ElectoralProcess)
     async createElectoralProcess(
         @Args("eproccess") eproccess: CreateEProcessInput
     ){
-        console.log({ eproccess });
         return await this.eprocessService.create(eproccess);
     }
 
-    @Mutation(() => String)
-    async deleteElectoralProcess(
-        @Args("id") id: number
-    ){
-        await this.eprocessService.delete(id)
-        return "Proceso borrado"
+    @Mutation(() => ElectoralProcess)
+    async updateElectoralProcess(
+        @Args("updateEprocess") updateEprocess: UpdateEProcessInput
+    ) {
+        return await this.eprocessService.update(updateEprocess);
     }
-    
+
+    @Mutation(() => ElectoralProcess)
+    async deleteElectoralProcess(
+        @Args("id", { type: () => Int }) id: number
+    ){
+        return await this.eprocessService.delete(id) 
+    }
+
+    @Mutation(() => Boolean)
+    async switchElectoralProcessState(
+        @Args("id", { type: () => Int }) id: number
+    ) {
+        return await this.eprocessService.switchState(id);
+    }
 }
