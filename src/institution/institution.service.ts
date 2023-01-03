@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateInstitutionInput } from './dto/create-institution.input';
+import { CreateInstitutionInput, UpdateInstitutionInput } from './dto';
 import { Institution } from './entities';
 
 @Injectable()
@@ -16,6 +16,14 @@ export class InstitutionService {
         return institutions
     }
 
+    async findOne(id: number): Promise<Institution>{
+        const institution = await this.repository.findOneBy({ id });
+        if (!institution) 
+            throw new NotFoundException(`No existe la institucion con el id ${id}`)
+        
+        return institution
+    }
+
     async create(institution: CreateInstitutionInput){
         try {
             const newInstitution = this.repository.create(institution);
@@ -25,12 +33,23 @@ export class InstitutionService {
         }
     }
 
+    
+    async update(updateInstitution: UpdateInstitutionInput){
+        try {
+            await this.findOne(updateInstitution.id);
+            const institution = await this.repository.preload(updateInstitution);
+            return this.repository.save(institution);
+        } catch (error) {
+            console.log({error});
+            throw new Error("No se pudo actualizar");
+        }
+    }
+    
     async delete(id: number) {
         try {
             const institution = await this.repository.findOneBy({ id })
             return await this.repository.remove(institution);
         } catch (error) {
-            console.error({ error });
             throw new Error("No se pudo borrar");
         }
     }
