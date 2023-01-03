@@ -9,7 +9,8 @@ import { InstitutionService } from './institution.service';
         TypeOrmModule.forFeature([Institution])
     ],
     exports: [
-        TypeOrmModule
+        TypeOrmModule,
+        InstitutionService
     ],
     providers: [
         InstitutionResolver, 
