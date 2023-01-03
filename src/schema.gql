@@ -45,18 +45,50 @@ type Board {
 
 type Query {
   getAllBoards: [Board!]!
+  getBoard(id: Int!): Board!
   getAllElectoralProcess: [ElectoralProcess!]!
+  getElectoralProcess(id: Int!): ElectoralProcess!
   getAllInstitutions: [Institution!]!
+  getInstitution(id: Int!): Institution!
 }
 
 type Mutation {
+  createBoard(createBoard: CreateBoardInput!): Board!
+  createMasiveBoards(createBoards: [CreateBulkBoardsInput!]!, idEProcess: Int!): [Board!]!
+  updateBoard(updateBoard: UpdateBoardInput!): Board!
+  deleteBoard(id: Int!): Board!
   createElectoralProcess(eproccess: CreateEProcessInput!): ElectoralProcess!
-  deleteElectoralProcess(id: Float!): String!
+  updateElectoralProcess(updateEprocess: UpdateEProcessInput!): ElectoralProcess!
+  deleteElectoralProcess(id: Int!): ElectoralProcess!
+  switchElectoralProcessState(id: Int!): Boolean!
   createInstitution(institution: CreateInstitutionInput!): Institution!
-  deleteInstitution(id: Float!): Institution!
+  updateInstitution(institution: UpdateInstitutionInput!): Institution!
+  deleteInstitution(id: Int!): Institution!
 }
 
-"""Input Proceso Electoral"""
+"""Input creacion Junta"""
+input CreateBoardInput {
+  number: Int!
+  place: String!
+  electoralProcess: Int!
+}
+
+"""Input creacion masiva Junta"""
+input CreateBulkBoardsInput {
+  number: Int
+  place: String
+  electoralProcess: Int
+}
+
+"""Input actualizacion Junta"""
+input UpdateBoardInput {
+  number: Int
+  place: String
+  electoralProcess: Int
+  id: Int!
+}
+
+"""Input creacion Proceso Electoral"""
 input CreateEProcessInput {
   processDate: DateTime!
   initialHour: DateTime!
@@ -67,6 +99,18 @@ input CreateEProcessInput {
   institution: Float!
 }
 
+"""Input Proceso Electoral"""
+input UpdateEProcessInput {
+  processDate: DateTime
+  initialHour: DateTime
+  finalHour: DateTime
+  name: String
+  period: String
+  isActive: Boolean
+  institution: Float
+  id: Int!
+}
+
 """Input Institucion"""
 input CreateInstitutionInput {
   name: String!
@@ -74,4 +118,14 @@ input CreateInstitutionInput {
   province: String!
   canton: String!
   parish: String!
+}
+
+"""Input Updated Institucion"""
+input UpdateInstitutionInput {
+  name: String
+  image: String
+  province: String
+  canton: String
+  parish: String
+  id: Int!
 }
