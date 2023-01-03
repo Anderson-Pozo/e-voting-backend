@@ -16,6 +16,8 @@ export class Board extends Base {
     @Field()
     @Column({ length: "100" })
     place: string
+
+    //TODO Precent?
     
     @Field(() => ElectoralProcess)
     @ManyToOne(() => ElectoralProcess, (elProc) => elProc.board)
