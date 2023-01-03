@@ -13,7 +13,7 @@ export class Institution extends Base {
     
     @Field({ nullable: true })
     @Column({length: 100})
-    image: string
+    image?: string
     
     @Field()
     @Column({length: 30})
