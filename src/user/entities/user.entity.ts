@@ -1,7 +1,9 @@
 
 export class User {
+    fullname: string
     username: string
     password:string
-    rol: string
+    roles: string[]
     enabled: boolean
+    email?: string
 }
