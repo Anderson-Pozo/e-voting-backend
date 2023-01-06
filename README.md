@@ -1,1 +1,1 @@
-## Graphql server API
+## e-voting Graphql server API
