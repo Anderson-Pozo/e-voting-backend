@@ -1,6 +1,17 @@
-// import { List } from "../list/entity";
+import { CreateDateColumn, Entity, ManyToOne } from "typeorm"
+import { Base } from "src/common/entities"
+import { List } from "src/list/entities"
+import { Elector } from "src/elector/entities"
 
-export class Vote {
-    option: any // TODO
-    hash: string
+@Entity()
+export class Vote extends Base {
+    
+    @ManyToOne(() => List, list => list.vote)
+    list: List
+    
+    @ManyToOne(() => Elector, elector => elector.vote)
+    elector: Elector
+    
+    @CreateDateColumn()
+    votingTime: Date
 }

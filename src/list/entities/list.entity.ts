@@ -1,7 +1,8 @@
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { Base } from "src/common/entities";
-import { ElectoralProcess } from "src/electoral-process/entities";
+import { Vote } from "src/vote/entities/vote.entity";
 import { Candidate } from "src/candidate/entities";
+import { ElectoralProcess } from "src/electoral-process/entities";
 
 // Lista
 @Entity()
@@ -20,4 +21,7 @@ export class List extends Base {
 
     @OneToMany(() => Candidate, (candidate) => candidate.list)
     candidate: Candidate[]
+
+    @OneToMany(() => Vote, vote => vote.list)
+    vote: Vote[]
 }

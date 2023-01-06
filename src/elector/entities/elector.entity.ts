@@ -1,6 +1,8 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { Base } from "src/common/entities";
 import { Board } from "src/board/entities";
+import { User } from "src/user/entities/user.entity";
+import { Vote } from "src/vote/entities/vote.entity";
 
 // Elector
 @Entity()
@@ -17,6 +19,13 @@ export class Elector extends Base {
     @Column({default: false})
     exercisedVote: boolean
 
-    @ManyToOne(() => Board, (board) => board.elector)
+    @ManyToOne(() => Board, board => board.elector)
     board: Board
+
+    @OneToMany(() => Vote, vote => vote.elector)
+    vote: Vote[]
+    
+    @OneToOne(() => User, user => user.elector)
+    @JoinColumn()
+    user: User
 }
