@@ -1,30 +1,38 @@
-import { Column, Entity, OneToOne } from "typeorm"
-import { Base } from "src/common/entities"
-import { Elector } from "src/elector/entities"
-import { Mjvr } from "src/mjrv/entities"
+import { Column, Entity, OneToOne } from "typeorm";
+import { Field, ObjectType } from "@nestjs/graphql";
+import { Base } from "src/common/entities";
+import { Elector } from "src/elector/entities";
+import { Mjrv } from "src/mjrv/entities";
 
+@ObjectType({ description: "Entidad usuario" })
 @Entity()
 export class User extends Base{
+    @Field()
     @Column({ length: 50 })
     fullname: string
-
+    
+    @Field()
     @Column({ length: 15, unique: true })
     username: string
     
+    @Field()
     @Column()
     password:string
-
-    @Column('text', { array: true })
+    
+    @Field(() => [String])
+    @Column('text', { array: true, default: ['user'] })
     roles: string[]
     
+    @Field()
     @Column({ default: true })
     isActive: boolean
-
+    
+    @Field({ nullable: true })
     @Column({ nullable: true })
     email?: string
 
-    @OneToOne(() => Mjvr, (mjrv) => mjrv.user)
-    mjrv: Mjvr
+    @OneToOne(() => Mjrv, (mjrv) => mjrv.user)
+    mjrv: Mjrv
     
     @OneToOne(() => Elector, (elector) => elector.user)
     elector: Elector
