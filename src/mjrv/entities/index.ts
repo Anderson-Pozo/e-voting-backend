@@ -1,1 +1,1 @@
-export { Mjvr } from "./mjrv.entity";
+export { Mjrv } from "./mjrv.entity";
