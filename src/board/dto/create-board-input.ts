@@ -1,4 +1,4 @@
-import { Field, InputType, Int, PartialType } from "@nestjs/graphql"
+import { Field, InputType, Int, OmitType, PartialType } from "@nestjs/graphql"
 import { IsNumber, IsString, Min } from "class-validator"
 
 @InputType({ description: "Input creacion Junta" })
@@ -18,6 +18,6 @@ export class CreateBoardInput {
 }
 
 @InputType({ description: "Input creacion masiva Junta" })
-export class CreateBulkBoardsInput extends PartialType(
-    CreateBoardInput as new () => Omit<CreateBoardInput, "electoralProcess">
-){}
+export class CreateBulkBoardsInput extends OmitType(CreateBoardInput, [
+    'electoralProcess'
+] as const){}

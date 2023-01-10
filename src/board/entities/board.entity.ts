@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { Base } from "src/common/entities";
-import { Mjvr } from "src/mjrv/entities";
+import { Mjrv } from "src/mjrv/entities";
 import { Elector } from "src/elector/entities";
 import { ElectoralProcess } from "src/electoral-process/entities";
 import { Field, ObjectType } from "@nestjs/graphql";
@@ -23,8 +23,8 @@ export class Board extends Base {
     @ManyToOne(() => ElectoralProcess, (elProc) => elProc.board)
     electoralProcess: ElectoralProcess
 
-    @OneToMany(() => Mjvr, (mjrv) => mjrv.board)
-    mjrv: Mjvr[]
+    @OneToMany(() => Mjrv, (mjrv) => mjrv.board)
+    mjrv: Mjrv[]
 
     @OneToMany(() => Elector, (elect) => elect.board)
     elector: Elector[]

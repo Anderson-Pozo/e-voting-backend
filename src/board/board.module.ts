@@ -11,7 +11,8 @@ import { ElectoralProcessModule } from 'src/electoral-process/electoral-process.
         ElectoralProcessModule
     ],
     exports: [
-        TypeOrmModule
+        TypeOrmModule,
+        BoardService
     ],
     providers: [BoardService, BoardResolver]
 })
