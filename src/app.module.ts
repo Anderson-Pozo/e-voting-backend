@@ -7,7 +7,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { CommonModule } from './common/common.module';
-import { AuthModule } from './auth/auth.module';
 import { BoardModule } from './board/board.module';
 import { CandidateModule } from './candidate/candidate.module';
 import { ElectorModule } from './elector/elector.module';
@@ -17,6 +16,7 @@ import { ListModule } from './list/list.module';
 import { MjrvModule } from './mjrv/mjrv.module';
 import { VoteModule } from './vote/vote.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -41,7 +41,6 @@ import { UserModule } from './user/user.module';
       autoLoadEntities: true
     }),
     CommonModule,
-    AuthModule,
     BoardModule,
     CandidateModule,
     ElectorModule,
@@ -50,7 +49,8 @@ import { UserModule } from './user/user.module';
     ListModule,
     MjrvModule,
     VoteModule,
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
