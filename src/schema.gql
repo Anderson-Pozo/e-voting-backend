@@ -33,6 +33,32 @@ type ElectoralProcess {
   institution: Institution!
 }
 
+"""Entidad usuario"""
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  fullname: String!
+  username: String!
+  password: String!
+  roles: [String!]!
+  isActive: Boolean!
+  email: String
+}
+
+"""Entidad MJRV"""
+type Mjrv {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  dni: String!
+  firstname: String!
+  lastname: String!
+  position: String!
+  board: Board!
+  user: User!
+}
+
 """Junta"""
 type Board {
   id: ID!
@@ -50,6 +76,7 @@ type Query {
   getElectoralProcess(id: Int!): ElectoralProcess!
   getAllInstitutions: [Institution!]!
   getInstitution(id: Int!): Institution!
+  getAllMjrvs: [Mjrv!]!
 }
 
 type Mutation {
@@ -64,6 +91,7 @@ type Mutation {
   createInstitution(institution: CreateInstitutionInput!): Institution!
   updateInstitution(institution: UpdateInstitutionInput!): Institution!
   deleteInstitution(id: Int!): Institution!
+  createMjrv(createMjrv: CreateMjrvInput!): Mjrv!
 }
 
 """Input creacion Junta"""
@@ -75,9 +103,8 @@ input CreateBoardInput {
 
 """Input creacion masiva Junta"""
 input CreateBulkBoardsInput {
-  number: Int
-  place: String
-  electoralProcess: Int
+  number: Int!
+  place: String!
 }
 
 """Input actualizacion Junta"""
@@ -128,4 +155,13 @@ input UpdateInstitutionInput {
   canton: String
   parish: String
   id: Int!
+}
+
+"""Input creacion Mjrv"""
+input CreateMjrvInput {
+  dni: String!
+  firstname: String!
+  lastname: String!
+  position: String!
+  board: Int!
 }
