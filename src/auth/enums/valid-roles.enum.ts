@@ -1,0 +1,7 @@
+
+// TODO: Change valid roles values
+export enum ValidRoles {
+    admin = "admin",
+    user = "user",
+    superUser = "superuser",
+}
