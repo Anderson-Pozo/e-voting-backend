@@ -20,8 +20,6 @@ export class MjrvResolver {
         @Args("createMjrv") createMjrv: CreateMjrvInput
     ){
         return await this.mjrvService.create(createMjrv);
-        // console.log({ createMjrv });        
-        // return createMjrv;
     }
     
 }

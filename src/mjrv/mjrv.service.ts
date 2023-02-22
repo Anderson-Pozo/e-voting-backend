@@ -1,4 +1,5 @@
 import { DataSource, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMjrvInput } from './dto';
@@ -42,9 +43,11 @@ export class MjrvService {
         try {
             const user = queryRunner.manager.create(User, {
                 fullname: firstname.concat(" ", lastname),
-                password: "1212nahsaj", // TODO: Encrypt password
+                password: bcrypt.hashSync(dni, 10),
                 username: dni 
             })
+            
+            await queryRunner.manager.save(user);
 
             const mjrv = queryRunner.manager.create(Mjrv, {
                 ...createMjrv,
