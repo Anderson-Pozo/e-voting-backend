@@ -16,7 +16,7 @@ export class InstitutionService {
         return institutions
     }
 
-    async findOne(id: number): Promise<Institution>{
+    async findOne(id: string): Promise<Institution>{
         const institution = await this.repository.findOneBy({ id });
         if (!institution) 
             throw new NotFoundException(`No existe la institucion con el id ${id}`)
@@ -45,7 +45,7 @@ export class InstitutionService {
         }
     }
     
-    async delete(id: number) {
+    async delete(id: string) {
         try {
             const institution = await this.repository.findOneBy({ id })
             return await this.repository.remove(institution);

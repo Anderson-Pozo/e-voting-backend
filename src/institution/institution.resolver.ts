@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateInstitutionInput, UpdateInstitutionInput } from './dto';
 import { Institution } from './entities';
 import { InstitutionService } from './institution.service';
@@ -16,7 +16,7 @@ export class InstitutionResolver {
 
     @Query(() => Institution)
     async getInstitution(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ): Promise<Institution> {
         return this.institutionService.findOne(id);
     }
@@ -37,7 +37,7 @@ export class InstitutionResolver {
 
     @Mutation(() => Institution)
     async deleteInstitution(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ) {
         return await this.institutionService.delete(id);
     }
