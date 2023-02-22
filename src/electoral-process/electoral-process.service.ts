@@ -24,7 +24,7 @@ export class ElectoralProcessService {
         });
     }
 
-    async findOne(id: number) {
+    async findOne(id: string) {
         const eProcess = await this.repository.findOneBy({ id });
         if (!eProcess) 
             throw new NotFoundException(`No se pudo encontrar proceso con id ${id}`);
@@ -65,12 +65,12 @@ export class ElectoralProcessService {
         }
     }
 
-    async delete(id: number) {
+    async delete(id: string) {
         const eprocess = await this.repository.findOneBy({ id })
         return await this.repository.remove(eprocess)
     }
 
-    async switchState(id: number): Promise<boolean>{
+    async switchState(id: string): Promise<boolean>{
         const eprocess = await this.findOne(id);
         eprocess.isActive = !eprocess.isActive
         const eprocessSwitched = await this.repository.save(eprocess);

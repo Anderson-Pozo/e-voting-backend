@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateEProcessInput, UpdateEProcessInput } from './dto';
 import { ElectoralProcessService } from './electoral-process.service';
 import { ElectoralProcess } from './entities';
@@ -16,7 +16,7 @@ export class ElectoralProcessResolver {
 
     @Query(() => ElectoralProcess)
     async getElectoralProcess(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ){
         return await this.eprocessService.findOne(id)
     }
@@ -37,14 +37,14 @@ export class ElectoralProcessResolver {
 
     @Mutation(() => ElectoralProcess)
     async deleteElectoralProcess(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ){
         return await this.eprocessService.delete(id) 
     }
 
     @Mutation(() => Boolean)
     async switchElectoralProcessState(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ) {
         return await this.eprocessService.switchState(id);
     }

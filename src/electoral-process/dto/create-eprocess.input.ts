@@ -1,5 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsBoolean, IsDate, IsNumber, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { Field, ID, InputType } from "@nestjs/graphql";
+import { IsBoolean, IsDate, IsOptional, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
 
 @InputType({ description: "Input creacion Proceso Electoral" })
 export class CreateEProcessInput {
@@ -30,7 +30,7 @@ export class CreateEProcessInput {
     @IsOptional()
     isActive: boolean
     
-    @Field()
-    @IsNumber()
-    institution: number
+    @Field(() => ID)
+    @IsUUID()
+    institution: string
 }
