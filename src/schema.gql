@@ -40,7 +40,6 @@ type User {
   updatedAt: DateTime!
   fullname: String!
   username: String!
-  password: String!
   roles: [String!]!
   isActive: Boolean!
   email: String
@@ -69,36 +68,43 @@ type Board {
   electoralProcess: ElectoralProcess!
 }
 
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
 type Query {
   getAllBoards: [Board!]!
-  getBoard(id: Int!): Board!
+  getBoard(id: ID!): Board!
   getAllElectoralProcess: [ElectoralProcess!]!
-  getElectoralProcess(id: Int!): ElectoralProcess!
+  getElectoralProcess(id: ID!): ElectoralProcess!
   getAllInstitutions: [Institution!]!
-  getInstitution(id: Int!): Institution!
+  getInstitution(id: ID!): Institution!
   getAllMjrvs: [Mjrv!]!
+  revalidateToken: AuthResponse!
 }
 
 type Mutation {
   createBoard(createBoard: CreateBoardInput!): Board!
-  createMasiveBoards(createBoards: [CreateBulkBoardsInput!]!, idEProcess: Int!): [Board!]!
+  createMasiveBoards(createBoards: [CreateBulkBoardsInput!]!, idEProcess: ID!): [Board!]!
   updateBoard(updateBoard: UpdateBoardInput!): Board!
-  deleteBoard(id: Int!): Board!
+  deleteBoard(id: ID!): Board!
   createElectoralProcess(eproccess: CreateEProcessInput!): ElectoralProcess!
   updateElectoralProcess(updateEprocess: UpdateEProcessInput!): ElectoralProcess!
-  deleteElectoralProcess(id: Int!): ElectoralProcess!
-  switchElectoralProcessState(id: Int!): Boolean!
+  deleteElectoralProcess(id: ID!): ElectoralProcess!
+  switchElectoralProcessState(id: ID!): Boolean!
   createInstitution(institution: CreateInstitutionInput!): Institution!
   updateInstitution(institution: UpdateInstitutionInput!): Institution!
-  deleteInstitution(id: Int!): Institution!
+  deleteInstitution(id: ID!): Institution!
   createMjrv(createMjrv: CreateMjrvInput!): Mjrv!
+  login(loginInput: LoginInput!): AuthResponse!
 }
 
 """Input creacion Junta"""
 input CreateBoardInput {
   number: Int!
   place: String!
-  electoralProcess: Int!
+  electoralProcess: ID!
 }
 
 """Input creacion masiva Junta"""
@@ -111,8 +117,8 @@ input CreateBulkBoardsInput {
 input UpdateBoardInput {
   number: Int
   place: String
-  electoralProcess: Int
-  id: Int!
+  electoralProcess: ID
+  id: ID!
 }
 
 """Input creacion Proceso Electoral"""
@@ -123,7 +129,7 @@ input CreateEProcessInput {
   name: String!
   period: String!
   isActive: Boolean
-  institution: Float!
+  institution: ID!
 }
 
 """Input Proceso Electoral"""
@@ -134,8 +140,8 @@ input UpdateEProcessInput {
   name: String
   period: String
   isActive: Boolean
-  institution: Float
-  id: Int!
+  institution: ID
+  id: ID!
 }
 
 """Input Institucion"""
@@ -154,7 +160,7 @@ input UpdateInstitutionInput {
   province: String
   canton: String
   parish: String
-  id: Int!
+  id: ID!
 }
 
 """Input creacion Mjrv"""
@@ -163,5 +169,11 @@ input CreateMjrvInput {
   firstname: String!
   lastname: String!
   position: String!
-  board: Int!
+  board: ID!
+}
+
+"""Input login"""
+input LoginInput {
+  username: String!
+  password: String!
 }
