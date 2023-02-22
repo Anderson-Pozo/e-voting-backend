@@ -1,6 +1,5 @@
-import { Field, InputType, Int } from "@nestjs/graphql";
-import { IsIn, IsNumber, IsString, MaxLength, MinLength } from "class-validator";
-import { MjrvPosition } from "../enums/mjrv-position.enum";
+import { Field, ID, InputType } from "@nestjs/graphql";
+import { IsIn, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
 
 @InputType({ description: "Input creacion Mjrv" })
 export class CreateMjrvInput {
@@ -25,9 +24,9 @@ export class CreateMjrvInput {
     @IsIn(["Presidente", "Secretario", "Vocal"])
     position: string
 
-    @Field(() => Int)
-    @IsNumber()
-    board: number
+    @Field(() => ID)
+    @IsUUID()
+    board: string
 
     // @Field(() => User)
     // user: User
