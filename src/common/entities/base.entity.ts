@@ -5,8 +5,8 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 export abstract class Base extends BaseEntity {
     @Field(() => ID)
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryGeneratedColumn('uuid')
+    id: string
 
     @Field()
     @CreateDateColumn()
