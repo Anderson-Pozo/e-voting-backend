@@ -15,7 +15,7 @@ export class User extends Base{
     @Column({ length: 15, unique: true })
     username: string
     
-    @Field()
+    // @Field()
     @Column()
     password:string
     
