@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BoardService } from './board.service';
 import { CreateBoardInput, CreateBulkBoardsInput, UpdateBoardInput } from './dto';
 import { Board } from './entities';
@@ -16,7 +16,7 @@ export class BoardResolver {
 
     @Query(() => Board)
     async getBoard(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ) {
         return this.boardService.findOne(id);
     }
@@ -32,7 +32,7 @@ export class BoardResolver {
     async createMasiveBoards(
         @Args("createBoards", { type: () => [CreateBulkBoardsInput] }) 
             createBoards: CreateBulkBoardsInput[],
-        @Args("idEProcess", { type: () => Int }) idEprocess: number
+        @Args("idEProcess", { type: () => ID }) idEprocess: string
     ){
         return await this.boardService.bulkCreate(idEprocess, createBoards);
     }
@@ -46,7 +46,7 @@ export class BoardResolver {
 
     @Mutation(() => Board)
     async deleteBoard(
-        @Args("id", { type: () => Int }) id: number
+        @Args("id", { type: () => ID }) id: string
     ){
         return await this.boardService.delete(id);
     }

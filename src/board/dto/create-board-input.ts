@@ -1,5 +1,5 @@
-import { Field, InputType, Int, OmitType, PartialType } from "@nestjs/graphql"
-import { IsNumber, IsString, Min } from "class-validator"
+import { Field, ID, InputType, Int, OmitType } from "@nestjs/graphql"
+import { IsNumber, IsString, IsUUID, Min } from "class-validator"
 
 @InputType({ description: "Input creacion Junta" })
 export class CreateBoardInput {
@@ -12,9 +12,9 @@ export class CreateBoardInput {
     @IsString()
     place: string
     
-    @Field(() => Int)
-    @IsNumber()
-    electoralProcess: number
+    @Field(() => ID)
+    @IsUUID()
+    electoralProcess: string
 }
 
 @InputType({ description: "Input creacion masiva Junta" })

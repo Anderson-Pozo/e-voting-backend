@@ -20,11 +20,11 @@ export class BoardService {
             relations:{
                 electoralProcess: true
             }
-        })
+        });
         return boards
     }
 
-    async findOne(id: number): Promise<Board>{
+    async findOne(id: string): Promise<Board>{
         const board = await this.repository.findOneBy({ id });
         if (!board) 
             throw new NotFoundException(`No se encontró la junta con id ${ id }`);
@@ -50,7 +50,7 @@ export class BoardService {
         }
     }
 
-    async bulkCreate(idEProcess: number, boardsInput: CreateBulkBoardsInput[]){
+    async bulkCreate(idEProcess: string, boardsInput: CreateBulkBoardsInput[]){
         try {
 
             const electoralProcess = await this.eprocessService.findOne(idEProcess);
@@ -67,13 +67,14 @@ export class BoardService {
                 .into(Board)
                 .values(boards)
                 .execute()
-
                 
             const ides = query.identifiers.map(iden => iden.id);
 
             const createdBoards = await this.repository.findBy({ 
-                id: In(ides) 
+                id: In(ides),
             });
+
+            console.log({ createdBoards });
                         
             return createdBoards;
 
@@ -102,7 +103,7 @@ export class BoardService {
         }
     }
 
-    async delete(id: number){
+    async delete(id: string){
         const board = await this.findOne(id);
         return await this.repository.remove(board);
     }
